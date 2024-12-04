@@ -20,59 +20,43 @@ export async function register(req, res) {
   try {
     const { username, password, profile, email } = req.body;
 
-    //checking the existing user
-    const existUsername = new Promise((resolve, reject) => {
-      UserModel.findOne({ username }, function (err, user) {
-        if (err) reject(new Error(err));
-        if (user) reject({ error: "please use unique username" });
-        resolve();
-      });
-    });
+    // Check if username exists
+    const userByUsername = await UserModel.findOne({ username });
+    if (userByUsername) {
+      return res.status(400).json({ error: "Please use a unique username" });
+    }
 
-    //checking the existing email
-    const existEmail = new Promise((resolve, reject) => {
-      UserModel.findOne({ email }, function (err, email) {
-        if (err) reject(new Error(err));
-        if (email) reject({ error: "This email is already registered" });
-        resolve();
-      });
-    });
+    // Check if email exists
+    const userByEmail = await UserModel.findOne({ email });
+    if (userByEmail) {
+      return res
+        .status(400)
+        .json({ error: "This email is already registered" });
+    }
 
-    Promise.all([existUsername, existEmail])
-      .then(() => {
-        if (password) {
-          bcrypt
-            .hash(password, 10)
-            .then((hashedPassword) => {
-              const user = new UserModel({
-                username,
-                password: hashedPassword,
-                profile: profile || "",
-                email: email,
-              });
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-              //return save result as a response
-              user
-                .save()
-                .then((result) =>
-                  res.status(201).send({ msg: "User Register Successfully" })
-                )
-                .catch((error) => res.status(500).send(error));
-            })
-            .catch((error) => {
-              return res.status(500).send({
-                error: "Enable to hashed password inside",
-              });
-            });
-        }
-      })
-      .catch((error) => {
-        return res.status(500).send({
-          error: "Enable to hashed password outside",
-        });
+      // Create new user
+      const user = new UserModel({
+        username,
+        password: hashedPassword,
+        profile: profile || "",
+        email,
       });
+
+      // Save user to database
+      const result = await user.save();
+      return res
+        .status(201)
+        .send({ msg: "User registered successfully", result });
+    } else {
+      return res.status(400).json({ error: "Password is required" });
+    }
   } catch (error) {
-    res.status(500).json("you got some error", error);
+    res
+      .status(500)
+      .json({ error: "you got some error", details: error.message });
   }
 }
 
