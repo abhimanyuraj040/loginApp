@@ -3,9 +3,7 @@ import bcrypt from "bcrypt";
 
 /**
  * http://localhost:8000/api/register
- * @param {*} req
- * @param {*} res
- 
+ * 
     "username" : "example123",
     "password" : "admin123",
     "email" : "example@gmail.com",
