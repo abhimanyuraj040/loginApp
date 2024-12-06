@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 /**
  * http://localhost:8000/api/register
- * 
+ * need to create user.model.js before calling api
     "username" : "example123",
     "password" : "admin123",
     "email" : "example@gmail.com",
