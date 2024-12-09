@@ -17,7 +17,7 @@ import bcrypt from "bcrypt";
 export async function register(req, res) {
   try {
     const { username, password, profile, email } = req.body;
-
+    
     // Check if username exists
     const userByUsername = await UserModel.findOne({ username });
     if (userByUsername) {
