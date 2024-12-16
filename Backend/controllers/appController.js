@@ -73,7 +73,7 @@ export async function getUser(req, res) {
 }
 
 /**
- *
+ * for update user
  * @param {
  * } req
  * @param {*} res
@@ -87,18 +87,26 @@ export async function updateUser(req, res) {
   res.json("updateUser route");
 }
 
+
+//generate otp
 export async function generatorOTP(req, res) {
   res.json("generateOTP  route");
 }
 
+
+//verify otp
 export async function verifyOTP(req, res) {
   res.json("verifyOTP route");
 }
 
+
+//Reset session
 export async function createResetSession(req, res) {
   res.json("createResetSession route");
 }
 
+
+//reset password
 export async function resetPassword(req, res) {
   res.json("resetPassword route");
 }
