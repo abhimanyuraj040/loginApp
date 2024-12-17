@@ -17,7 +17,7 @@ import bcrypt from "bcrypt";
 export async function register(req, res) {
   try {
     const { username, password, profile, email } = req.body;
-    
+
     // Check if username exists
     const userByUsername = await UserModel.findOne({ username });
     if (userByUsername) {
@@ -87,26 +87,22 @@ export async function updateUser(req, res) {
   res.json("updateUser route");
 }
 
-
 //generate otp
 export async function generatorOTP(req, res) {
   res.json("generateOTP  route");
 }
 
-
 //verify otp
 export async function verifyOTP(req, res) {
-  res.json("verifyOTP route");
+  res.json("verifyOTP route working fine");
 }
-
 
 //Reset session
 export async function createResetSession(req, res) {
-  res.json("createResetSession route");
+  res.json("createResetSession route and working fine");
 }
-
 
 //reset password
 export async function resetPassword(req, res) {
-  res.json("resetPassword route");
+  res.json("resetPassword route and working fine");
 }
