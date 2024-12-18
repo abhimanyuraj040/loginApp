@@ -54,7 +54,7 @@ export async function register(req, res) {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "you got some error", details: error.message });
+      .json({ error: "you got some error please check here in detail", details: error.message });
   }
 }
 
@@ -64,12 +64,12 @@ export async function register(req, res) {
  */
 
 export async function login(req, res) {
-  res.json("login route");
+  res.json("login route logic should be here");
 }
 
 //http:localhost:8000/api/example123
 export async function getUser(req, res) {
-  res.json("getUser route");
+  res.json("getUser route logic should be here");
 }
 
 /**
